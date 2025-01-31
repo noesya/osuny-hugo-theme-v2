@@ -1,0 +1,20 @@
+{{ $context := . }}
+
+<div class="grid">
+  {{ range .pages }}
+    {{/*  Check if . is a map or page url, necessary when pages/list is called outside block context */}}
+    {{- $path := false -}}
+    {{ if reflect.IsMap . }}
+      {{ $path = .path }}
+    {{ else }}
+      {{ $path = . }}
+    {{ end }}
+
+    {{ $page := site.GetPage $path }}
+    {{ partial "pages/list/grid.html" (dict
+        "page" $page
+        "context" $context
+      )}}
+  {{ end }}
+</div>
+

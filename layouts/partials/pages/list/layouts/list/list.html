@@ -1,0 +1,21 @@
+{{ $context := . }}
+{{ $options := .options }}
+
+<ul class="list {{ if and (not $options.summary) (not $options.image) }} title-only {{ end }}">
+  {{ range .pages }}
+    {{/*  Check if . is a map or page url, necessary when pages/list is called outside block context */}}
+    {{- $path := false -}}
+    {{ if reflect.IsMap . }}
+      {{ $path = .path }}
+    {{ else }}
+      {{ $path = . }}
+    {{ end }}
+
+    {{ $page := site.GetPage $path }}
+    {{ partial "pages/list/list.html" (dict
+        "page" $page
+        "context" $context
+      )}}
+  {{ end }}
+</ul>
+

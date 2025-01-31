@@ -1,0 +1,11 @@
+{{ $context := . }}
+
+<div class="alternate">
+  {{ range .pages }}
+    {{ $page := site.GetPage .path }}
+    {{ partial "pages/list/alternate.html" (dict
+        "page" $page
+        "context" $context
+      )}}
+  {{ end }}
+</div>
